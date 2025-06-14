@@ -18,11 +18,15 @@ def test_add_product_to_cart(browser):
     page.click(cart_paterns.SEARCH_BUTTON)
 
     page.wait_for_selector(cart_paterns.CART_ADD_ICON)
+    product_name = page.locator(cart_paterns.SPAN_MACBOOK).first.text_content()
     page.click(cart_paterns.CART_ADD_ICON)
 
     page.wait_for_selector(cart_paterns.CART_BUTTON)
     page.click(cart_paterns.CART_BUTTON)
 
-    pass
+    cart_product = page.locator(cart_paterns.SPAN_MACBOOK).first.text_content()
+    assert product_name.strip() in cart_product, "Товар не знайдено в кошику"
+
+    page.close()
 
 
