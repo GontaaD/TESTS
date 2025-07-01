@@ -1,5 +1,6 @@
 import pytest
 from playwright.sync_api import sync_playwright
+import paterns_login
 
 @pytest.fixture(scope="session")
 def browser():
@@ -13,13 +14,13 @@ def test_login_by_phone(browser):
     page.goto("https://rozetka.com.ua", wait_until="load")
 
     # Клікнути на кнопку "Бічна панель"
-    page.wait_for_selector('button.header__button')
-    page.click('button.header__button')
+    page.wait_for_selector(paterns_login.MENU_BUTTON)
+    page.click(paterns_login.MENU_BUTTON)
 
     page.wait_for_timeout(500)
     #Клікнути на кнопку "Увійти"
-    page.wait_for_selector('button.button.button--navy.button--small.user-login__button')
-    page.click('button.button.button--navy.button--small.user-login__button')
+    page.wait_for_selector(paterns_login.LOGIN_BUTTON)
+    page.click(paterns_login.LOGIN_BUTTON)
 
     #Закрити бічне меню
     #page.click('button.close.ms-2')
@@ -36,14 +37,14 @@ def test_login_by_phone(browser):
     # Знайди фрейм, де є поле
     frame = None
     for f in page.frames:
-        if f.locator('//input[@data-qaid="phone"]').count() > 0:
+        if f.locator(paterns_login.NUMBER_INPUT).count() > 0:
             frame = f
             break
 
     if frame:
-        frame.fill('//input[@data-qaid="phone"]', '997952094')
-
-        button = frame.locator('button._00LHV.fsoe1.NQrpD.fAKin')
+        frame.fill(paterns_login.NUMBER_INPUT, '0997952094')
+        page.wait_for_timeout(500)
+        button = frame.locator(paterns_login.NUMBER_INPUT_BUTTON)
         button.wait_for(state='visible')
         button.click()
     else:
@@ -53,8 +54,8 @@ def test_login_by_phone(browser):
     page.wait_for_timeout(10000)  # пауза
 
     # Після введення коду перевірити, що увійшли (наприклад, по появі іконки профілю)
-    page.wait_for_selector('p.user-personal-info__name')
-    profile_name = page.inner_text('p.user-personal-info__name')
+    page.wait_for_selector(paterns_login.USER_NAME)
+    profile_name = page.inner_text(paterns_login.USER_NAME)
     assert profile_name == "Денис Гонта"
 
     page.close()

@@ -28,5 +28,3 @@ def test_add_product_to_cart(browser):
     assert product_name.strip() in cart_product, "Товар не знайдено в кошику"
 
     page.close()
-
-
