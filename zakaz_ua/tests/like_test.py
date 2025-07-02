@@ -14,20 +14,16 @@ class TestMain(BaseTest):
 
         self.page.goto("https://www.zakaz.ua", wait_until="load")
 
-        main_page.click_login_button()
+        login_page.login()
 
-        login_page.fill_number()
-        login_page.fill_password()
-        login_page.click_confirm_button()
+        main_page.open_category()
 
-        main_page.click_category_button()
-        main_page.click_bbq_button()
+        productTitle1 = bbq_page.first_search_product_name()
 
-        productTitle = bbq_page.first_search_product_name()
         bbq_page.click_heart_button()
-        bbq_page.open_navigator()
-        bbq_page.click_heart_list_button()
 
-        heart_list_page.second_search_product_name()
+        bbq_page.open_heart_list()
 
-        assert productTitle in heart_list_page.second_search_product_name()
+        productTitle2 = bbq_page.second_search_product_name()
+
+        assert productTitle1 in productTitle2

@@ -3,16 +3,23 @@ from zakaz_ua.locators.locators import LoginNumberAndPasswors
 from zakaz_ua.pages.base_page import BasePage
 
 class LoginPage(BasePage):
+
+    def click_login(self):
+        self.page.click(LoginPagelocators.LOGIN_BUTTON)
+
     def fill_number(self):
+        self.page.wait_for_selector(LoginPagelocators.NUMBER_INPUT)
         self.page.fill(LoginPagelocators.NUMBER_INPUT, LoginNumberAndPasswors.NUMBER)
 
     def fill_password(self):
         self.page.fill(LoginPagelocators.PASSWORD_INPUT, LoginNumberAndPasswors.PASSWORD)
 
     def click_confirm_button(self):
-        self.page.click(LoginPagelocators.LOGIN_BUTTON)
+        self.page.click(LoginPagelocators.LOGIN_APPLY)
 
     def login(self):
+        self.click_login()
+        self.page.wait_for_timeout(300)
         self.fill_number()
         self.page.wait_for_timeout(300)
         self.fill_password()

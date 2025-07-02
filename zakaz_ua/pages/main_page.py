@@ -14,3 +14,18 @@ class MainPage(BasePage):
     def open_category(self):
         self.click_category_button()
         self.click_bbq_button()
+
+    def open_account_navigator(self):
+        self.page.hover(MainPagelocators.ACCOUNT_NAVIGATOR)
+
+    def click_to_list_menu(self):
+        self.page.click(MainPagelocators.LIST_MENU)
+
+    def open_list_menu(self):
+        self.open_account_navigator()
+        self.page.wait_for_timeout(500)
+        self.click_to_list_menu()
+
+
+
+

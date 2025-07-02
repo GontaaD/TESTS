@@ -1,12 +1,14 @@
 class MainPagelocators:
-    LOGIN_BUTTON = "//button[contains(@class, 'LoginButton css-hnx7nu')]"
     CATEGORY_BUTTON = "//button[contains(@class, 'CategoriesMenuButton__inner')]"
     BBQ_CATEGORY_BUTTON = "//ul[@data-testid='categoriesMenuNav']//a[contains(@href, '/bbq-season-zakaz/')]"
+    ACCOUNT_NAVIGATOR = "//div[@data-marker='account navigation']"
+    LIST_MENU = "(//p[@class='AccountNavigationItem__text css-1sxve9s'])[6]"
 
 class LoginPagelocators:
+    LOGIN_BUTTON = "//button[contains(@class, 'LoginButton css-hnx7nu')]"
     NUMBER_INPUT = "//input[@class='form-control ']"
     PASSWORD_INPUT = "//input[@class='Input__field']"
-    LOGIN_BUTTON = "//button[@class='css-xdkem']"
+    LOGIN_APPLY = "//button[@class='css-xdkem']"
 
 class BBQCategoryPageLocators:
     HEART_BUTTON = "(//div[@data-marker='Products List']//i[contains(@class, 'icon-heart')])[1]"
@@ -26,3 +28,10 @@ class HeartListPageLocators:
 class LoginNumberAndPasswors:
     NUMBER = "997952094"
     PASSWORD = "198595"
+
+class ListPageLocators:
+    RENAME_BUTTON = "//button[@data-marker='Change name']"
+    LIST = "(//div[@class='css-1o947s6'])[1]"
+    INPUT_LIST_NAME = "//input[@data-marker='List name']"
+    APPLY_LIST_NAME_BUTTON = "//button[@data-marker='Save']"
+    LIST_NAME = "(//p[@class='css-7m85l7'])[2]"
