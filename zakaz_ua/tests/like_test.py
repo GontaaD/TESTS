@@ -24,6 +24,6 @@ class TestMain(BaseTest):
 
         bbq_page.open_heart_list()
 
-        productTitle2 = bbq_page.second_search_product_name()
+        productTitle2 = heart_list_page.second_search_product_name()
 
         assert productTitle1 in productTitle2
