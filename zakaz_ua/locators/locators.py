@@ -22,16 +22,10 @@ class BBQCategoryPageLocators:
     FILTER_APPLY_BUTTON = "//button[@data-marker='Filter Price OK']"
     PRICE_BLOCK = "//span[@data-sentry-component='PriceRange']"
 
-class HeartListPageLocators:
-    PRODUCT_IN_LIST_TITLE = "(//div[@data-marker='Products List']//p[@class='CatalogProductTile__title'])[1]"
-
-class LoginNumberAndPasswors:
-    NUMBER = "997952094"
-    PASSWORD = "198595"
-
 class ListPageLocators:
     RENAME_BUTTON = "//button[@data-marker='Change name']"
     LIST = "(//div[@class='css-1o947s6'])[1]"
     INPUT_LIST_NAME = "//input[@data-marker='List name']"
     APPLY_LIST_NAME_BUTTON = "//button[@data-marker='Save']"
     LIST_NAME = "(//p[@class='css-7m85l7'])[2]"
+    PRODUCT_IN_LIST_TITLE = "(//div[@data-marker='Products List']//p[@class='CatalogProductTile__title'])[1]"

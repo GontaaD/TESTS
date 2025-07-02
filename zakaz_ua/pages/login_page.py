@@ -1,6 +1,9 @@
 from zakaz_ua.locators.locators import LoginPagelocators
-from zakaz_ua.locators.locators import LoginNumberAndPasswors
 from zakaz_ua.pages.base_page import BasePage
+
+class LoginNumberAndPassword:
+    NUMBER = "997952094"
+    PASSWORD = "198595"
 
 class LoginPage(BasePage):
 
@@ -9,10 +12,10 @@ class LoginPage(BasePage):
 
     def fill_number(self):
         self.page.wait_for_selector(LoginPagelocators.NUMBER_INPUT)
-        self.page.fill(LoginPagelocators.NUMBER_INPUT, LoginNumberAndPasswors.NUMBER)
+        self.page.fill(LoginPagelocators.NUMBER_INPUT, LoginNumberAndPassword.NUMBER)
 
     def fill_password(self):
-        self.page.fill(LoginPagelocators.PASSWORD_INPUT, LoginNumberAndPasswors.PASSWORD)
+        self.page.fill(LoginPagelocators.PASSWORD_INPUT, LoginNumberAndPassword.PASSWORD)
 
     def click_confirm_button(self):
         self.page.click(LoginPagelocators.LOGIN_APPLY)

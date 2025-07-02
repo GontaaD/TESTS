@@ -2,6 +2,9 @@ from zakaz_ua.locators.locators import ListPageLocators
 from zakaz_ua.pages.base_page import BasePage
 
 class ListPage(BasePage):
+    def second_search_product_name(self):
+        return self.get_text(ListPageLocators.PRODUCT_IN_LIST_TITLE)
+
     def open_list(self):
         self.page.click(ListPageLocators.LIST)
 
@@ -28,11 +31,5 @@ class ListPage(BasePage):
         self.input_list_name(new_list_name)
         self.click_apply_list_name()
         self.page.wait_for_timeout(500)
-
-    def rename_check(self, new_list_name, old_list_name):
-        print(f"Перевірка назв: нова назва = '{new_list_name}', стара назва = '{old_list_name}'")
-        assert new_list_name != old_list_name, (
-            f"Помилка: назви списків збігаються! нова назва = '{new_list_name}', стара назва = '{old_list_name}'"
-        )
 
 
