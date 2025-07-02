@@ -13,6 +13,12 @@ class BBQCategoryPageLocators:
     PRODUCT_TITLE = "(//div[@data-marker='Products List']//p[@class='CatalogProductTile__title'])[1]"
     ACCOUNT_NAVIGATOR = "//div[@data-marker='account navigation']"
     HEART_LIST_BUTTON = "//i[@class='icon-heart-full AccountNavigationItem__icon css-15hz7qx']"
+    MIN_PRICE_FILTER = "//input[@data-testid='price-min']"
+    MAX_PRICE_FILTER = "//input[@data-testid='price-max']"
+    START_PRODUCT_PRICE = "//span[@class='PricesRange__start']"
+    END_PRODUCT_PRICE = "//span[@class='PricesRange__end']"
+    FILTER_APPLY_BUTTON = "//button[@data-marker='Filter Price OK']"
+    PRICE_BLOCK = "//span[@data-sentry-component='PriceRange']"
 
 class HeartListPageLocators:
     PRODUCT_IN_LIST_TITLE = "(//div[@data-marker='Products List']//p[@class='CatalogProductTile__title'])[1]"

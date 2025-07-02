@@ -11,3 +11,6 @@ class MainPage(BasePage):
     def click_bbq_button(self):
         self.page.click(MainPagelocators.BBQ_CATEGORY_BUTTON)
 
+    def open_category(self):
+        self.click_category_button()
+        self.click_bbq_button()

@@ -1,4 +1,3 @@
-from zakaz_ua.pages.base_page import BasePage
 from zakaz_ua.pages.main_page import MainPage
 from zakaz_ua.pages.BBQ_category_page import BBQPage
 from zakaz_ua.pages.heart_list_page import HeartListPage

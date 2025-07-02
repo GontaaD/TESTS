@@ -11,3 +11,10 @@ class LoginPage(BasePage):
 
     def click_confirm_button(self):
         self.page.click(LoginPagelocators.LOGIN_BUTTON)
+
+    def login(self):
+        self.fill_number()
+        self.page.wait_for_timeout(300)
+        self.fill_password()
+        self.page.wait_for_timeout(300)
+        self.click_confirm_button()
