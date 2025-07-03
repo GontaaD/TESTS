@@ -35,3 +35,8 @@ class ListPageLocators:
     SECOND_LIST_IN_CHANGE_LIST = "//*[text()='{0}']//ancestor::div[@class='css-1l7o2vn']".format(second_list_name)
     SAVE_CHANGE_LIST_BUTTON = "//button[@data-marker='Save']"
     CHANGE_BUTTON = "//button[@data-marker='change']"
+    CREATE_NEW_LIST_BUTTON = "//button[@data-marker='Open create list modal']"
+    INPUT_NAME_NEW_CREATE_LIST = "//input[@data-marker='List name']"
+    SAVE_NEW_CREATE_LIST_BUTTON = "//button[@data-marker='Save']"
+    name_for_new_list = "новий лист"
+    CREATED_NEW_LIST = "//*[text()='{0}']//ancestor::div[@class='css-1o947s6']".format(name_for_new_list)

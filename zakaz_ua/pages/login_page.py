@@ -22,7 +22,6 @@ class LoginPage(BasePage):
     def login(self):
         basepage = BasePage(self.page)
         self.click_login_button()
-        #self.page.wait_for_timeout(300)
         basepage.is_visible(LoginPagelocators.NUMBER_INPUT)
         self.fill_number()
         self.page.wait_for_timeout(300)

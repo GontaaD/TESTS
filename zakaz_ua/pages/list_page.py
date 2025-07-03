@@ -74,4 +74,20 @@ class ListPage(BasePage):
         mainpage.open_list_menu()
         self.open_my_cerated_list()
 
+    def click_create_new_list(self):
+        self.page.click(ListPageLocators.CREATE_NEW_LIST_BUTTON)
+
+    def input_name_for_new_list(self, name_for_new_list):
+        self.page.fill(ListPageLocators.INPUT_NAME_NEW_CREATE_LIST, str(name_for_new_list))
+
+    def save_new_list(self):
+        self.page.click(ListPageLocators.SAVE_NEW_CREATE_LIST_BUTTON)
+
+    def create_new_list(self, name_for_new_list):
+        self.click_create_new_list()
+        self.input_name_for_new_list(name_for_new_list)
+        self.save_new_list()
+
+
+
 

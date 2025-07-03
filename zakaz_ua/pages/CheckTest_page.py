@@ -1,4 +1,4 @@
-from zakaz_ua.locators.locators import BBQCategoryPageLocators
+from zakaz_ua.locators.locators import BBQCategoryPageLocators, ListPageLocators
 from zakaz_ua.pages.base_page import BasePage
 import re
 
@@ -58,3 +58,15 @@ class CheckTestPage(BasePage):
         assert new_list_name != old_list_name, (
             f"Помилка: назви списків збігаються! нова назва = '{new_list_name}', стара назва = '{old_list_name}'"
         )
+
+        #create new list check
+
+    def create_new_list_test(self):
+        basepage = BasePage(self.page)
+        created_list_locator = self.page.locator(ListPageLocators.CREATED_NEW_LIST)
+        self.page.wait_for_timeout(500)
+        basepage.is_visible(ListPageLocators.CREATED_NEW_LIST)
+        list_count = created_list_locator.count()
+        assert list_count != 0, (f"кількість обʼєктів: '{list_count}'")
+
+
