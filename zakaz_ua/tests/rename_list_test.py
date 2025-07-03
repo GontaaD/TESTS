@@ -13,6 +13,8 @@ class TestMain(BaseTest):
 
         self.page.goto("https://www.zakaz.ua", wait_until="load")
 
+        start_list_name = "лист123"
+
         new_list_name = "лист"
 
         login_page.login()
@@ -22,5 +24,7 @@ class TestMain(BaseTest):
         old_list_name = list_page.save_old_list_name()
 
         list_page.rename_list(new_list_name)
+        #back old name
+        list_page.back_old_list_name(start_list_name)
 
         check_page.rename_check(new_list_name, old_list_name)

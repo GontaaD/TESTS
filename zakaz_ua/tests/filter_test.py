@@ -16,7 +16,7 @@ class TestMain(BaseTest):
 
         login_page.login()
 
-        main_page.open_category()
+        main_page.open_bbq_category()
 
         enter_min_price = 80
         enter_max_price = 300

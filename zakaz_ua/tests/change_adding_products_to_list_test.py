@@ -22,9 +22,13 @@ class TestMain(BaseTest):
 
         bbq_page.click_heart_button()
 
-        main_page.open_list_menu()
+        list_page.change_list()
+
+        list_page.check_product_in_second_list()
 
         productTitle2 = list_page.search_product_name_in_list()
+
+        print(productTitle1, productTitle2)
 
         main_page.remove_like()
 

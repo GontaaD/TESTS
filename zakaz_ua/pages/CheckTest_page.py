@@ -58,5 +58,3 @@ class CheckTestPage(BasePage):
         assert new_list_name != old_list_name, (
             f"Помилка: назви списків збігаються! нова назва = '{new_list_name}', стара назва = '{old_list_name}'"
         )
-
-
