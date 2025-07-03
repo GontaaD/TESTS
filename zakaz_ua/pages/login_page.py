@@ -1,7 +1,5 @@
 from zakaz_ua.locators.locators import LoginPagelocators
 from zakaz_ua.pages.base_page import BasePage
-from zakaz_ua.pages.main_page import MainPage
-
 
 class LoginNumberAndPassword:
     NUMBER = "997952094"

@@ -28,8 +28,6 @@ class TestMain(BaseTest):
 
         productTitle2 = list_page.search_product_name_in_list()
 
-        print(productTitle1, productTitle2)
-
         main_page.remove_like()
 
         assert productTitle1 in productTitle2
