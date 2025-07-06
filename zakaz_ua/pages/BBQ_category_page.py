@@ -1,5 +1,14 @@
-from zakaz_ua.locators.locators import BBQCategoryPageLocators
 from zakaz_ua.pages.base_page import BasePage
+
+class BBQCategoryPageLocators:
+    HEART_BUTTON = "(//div[@data-marker='Products List']//i[contains(@class, 'icon-heart')])[1]"
+    PRODUCT_TITLE = "(//div[@data-marker='Products List']//p[@class='CatalogProductTile__title'])[1]"
+    MIN_PRICE_FILTER = "//input[@data-testid='price-min']"
+    MAX_PRICE_FILTER = "//input[@data-testid='price-max']"
+    START_PRODUCT_PRICE = "//span[@class='PricesRange__start']"
+    END_PRODUCT_PRICE = "//span[@class='PricesRange__end']"
+    FILTER_APPLY_BUTTON = "//button[@data-marker='Filter Price OK']"
+    PRICE_BLOCK = "//span[@data-sentry-component='PriceRange']"
 
 class BBQPage(BasePage):
     def click_heart_button(self):

@@ -1,9 +1,11 @@
-from zakaz_ua.locators.locators import LoginPagelocators
 from zakaz_ua.pages.base_page import BasePage
+from zakaz_ua.locators.variables_page import LoginNumberAndPassword
 
-class LoginNumberAndPassword:
-    NUMBER = "997952094"
-    PASSWORD = "198595"
+class LoginPagelocators:
+    LOGIN_BUTTON = "//button[contains(@class, 'LoginButton css-hnx7nu')]"
+    NUMBER_INPUT = "//input[@class='form-control ']"
+    PASSWORD_INPUT = "//input[@class='Input__field']"
+    LOGIN_APPLY = "//button[@class='css-xdkem']"
 
 class LoginPage(BasePage):
     def click_login_button(self):

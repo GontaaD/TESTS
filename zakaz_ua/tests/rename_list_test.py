@@ -1,30 +1,21 @@
-from zakaz_ua.pages.main_page import MainPage
-from zakaz_ua.pages.login_page import LoginPage
 from zakaz_ua.tests.base_test import BaseTest
-from zakaz_ua.pages.list_page import ListPage
-from zakaz_ua.pages.CheckTest_page import CheckTestPage
+from zakaz_ua.pages.Page_meneger import PageMeneger
 
 class TestMain(BaseTest):
     def test_start(self):
-        main_page = MainPage(self.page)
-        login_page = LoginPage(self.page)
-        list_page = ListPage(self.page)
-        check_page = CheckTestPage(self.page)
-
-        self.page.goto("https://www.zakaz.ua", wait_until="load")
-
         start_list_name = "лист123"
-
         new_list_name = "лист"
 
-        login_page.login()
+        pages = PageMeneger(self.page)
 
-        main_page.open_list_menu()
+        pages.login_page.login()
 
-        old_list_name = list_page.save_old_list_name()
+        pages.main_page.open_list_menu()
 
-        list_page.rename_list(new_list_name)
+        old_list_name = pages.list_page.save_old_list_name()
+
+        pages.list_page.rename_list(new_list_name)
         #back old name
-        list_page.back_old_list_name(start_list_name)
+        pages.list_page.back_old_list_name(start_list_name)
 
-        check_page.rename_check(new_list_name, old_list_name)
+        pages.check_page.rename_check(new_list_name, old_list_name)

@@ -1,4 +1,5 @@
-from zakaz_ua.locators.locators import BBQCategoryPageLocators, ListPageLocators
+from zakaz_ua.pages.list_page import ListPageLocators
+from zakaz_ua.pages.BBQ_category_page import BBQCategoryPageLocators
 from zakaz_ua.pages.base_page import BasePage
 import re
 
@@ -61,12 +62,24 @@ class CheckTestPage(BasePage):
 
         #create new list check
 
-    def create_new_list_test(self):
+    def create_new_list_test(self, list_name):
         basepage = BasePage(self.page)
-        created_list_locator = self.page.locator(ListPageLocators.CREATED_NEW_LIST)
+        replace_list_name_locator = ListPageLocators.CREATED_NEW_LIST.format(list_name=list_name)
+        created_list_locator = self.page.locator(replace_list_name_locator)
         self.page.wait_for_timeout(500)
         basepage.is_visible(ListPageLocators.CREATED_NEW_LIST)
         list_count = created_list_locator.count()
-        assert list_count != 0, (f"кількість обʼєктів: '{list_count}'")
+        print(f"кількість обʼєктів:'{created_list_locator}' '{list_count}'")
+        assert list_count != 0, (f"кількість обʼєктів:'{created_list_locator}' '{list_count}'")
 
+        #delete lict check
 
+    def delete_list_check(self, list_name):
+        basepage = BasePage(self.page)
+        replace_list_name_locator = ListPageLocators.CREATED_NEW_LIST.format(list_name=list_name)
+        created_list_locator = self.page.locator(replace_list_name_locator)
+        self.page.wait_for_timeout(500)
+        basepage.is_visible(ListPageLocators.CREATED_NEW_LIST)
+        list_count = created_list_locator.count()
+        print(f"кількість обʼєктів:'{created_list_locator}' '{list_count}'")
+        assert list_count == 0, (f"кількість обʼєктів:'{created_list_locator}' '{list_count}'")

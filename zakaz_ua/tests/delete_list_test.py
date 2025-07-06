@@ -14,8 +14,7 @@ class TestMain(BaseTest):
 
         pages.list_page.create_new_list(new_list_name)
 
-        pages.check_page.create_new_list_test(new_list_name)
+        pages.list_page.delete_list(new_list_name)
 
-
-
+        pages.check_page.delete_list_check(new_list_name)
 

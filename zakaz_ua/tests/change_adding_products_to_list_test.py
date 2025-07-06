@@ -1,33 +1,25 @@
-from zakaz_ua.pages.main_page import MainPage
-from zakaz_ua.pages.BBQ_category_page import BBQPage
-from zakaz_ua.pages.list_page import ListPage
-from zakaz_ua.pages.login_page import LoginPage
 from zakaz_ua.tests.base_test import BaseTest
+from zakaz_ua.pages.Page_meneger import PageMeneger
 
 
 class TestMain(BaseTest):
     def test_start(self):
-        main_page = MainPage(self.page)
-        bbq_page = BBQPage(self.page)
-        list_page = ListPage(self.page)
-        login_page = LoginPage(self.page)
+        pages = PageMeneger(self.page)
 
-        self.page.goto("https://www.zakaz.ua", wait_until="load")
+        pages.login_page.login()
 
-        login_page.login()
+        pages.main_page.open_bbq_category()
 
-        main_page.open_bbq_category()
+        productTitle1 = pages.bbq_page.search_product_name_in_catalog()
 
-        productTitle1 = bbq_page.search_product_name_in_catalog()
+        pages.bbq_page.click_heart_button()
 
-        bbq_page.click_heart_button()
+        pages.list_page.change_list()
 
-        list_page.change_list()
+        pages.list_page.check_product_in_second_list()
 
-        list_page.check_product_in_second_list()
+        productTitle2 = pages.list_page.search_product_name_in_list()
 
-        productTitle2 = list_page.search_product_name_in_list()
-
-        main_page.remove_like()
+        pages.main_page.remove_like()
 
         assert productTitle1 in productTitle2

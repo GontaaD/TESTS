@@ -1,6 +1,29 @@
-from zakaz_ua.locators.locators import ListPageLocators
 from zakaz_ua.pages.base_page import BasePage
 from zakaz_ua.pages.main_page import MainPage
+import random
+import string
+
+class ListPageLocators:
+    first_list_name = "Обрані"
+    second_list_name = "лист123"
+
+    RENAME_BUTTON = "//button[@data-marker='Change name']"
+    MY_CREATED_LIST = "(//div[@class='css-1o947s6'])[1]"
+    RENAME_MY_CREATED_LIST = "//div[@class='css-aqrc7q']"
+    INPUT_LIST_NAME = "//input[@data-marker='List name']"
+    APPLY_LIST_NAME_BUTTON = "//button[@data-marker='Save']"
+    MY_CREATED_LIST_NAME = "(//p[@class='css-7m85l7'])[2]"
+    PRODUCT_IN_LIST_TITLE = "(//div[@data-marker='Products List']//p[@class='CatalogProductTile__title'])[1]"
+    FIRST_LIST_IN_CHANGE_LIST = "//*[text()='{first_list_name}']//ancestor::div[@class='css-1qx3rq8']"
+    SECOND_LIST_IN_CHANGE_LIST = "//*[text()='{second_list_name}']//ancestor::div[@class='css-1l7o2vn']"
+    SAVE_CHANGE_LIST_BUTTON = "//button[@data-marker='Save']"
+    CHANGE_BUTTON = "//button[@data-marker='change']"
+    CREATE_NEW_LIST_BUTTON = "//button[@data-marker='Open create list modal']"
+    INPUT_NAME_NEW_CREATE_LIST = "//input[@data-marker='List name']"
+    SAVE_NEW_CREATE_LIST_BUTTON = "//button[@data-marker='Save']"
+    CREATED_NEW_LIST = "//*[text()='{list_name}']//ancestor::div[@class='css-1o947s6']"
+    DELETE_LIST_BUTTON = "//button[@data-marker='Delete list']"
+    APPLY_DELETE_LIST_BUTTON = "//button[@data-marker='Yes']"
 
 class ListPage(BasePage):
     def search_product_name_in_list(self):
@@ -77,16 +100,39 @@ class ListPage(BasePage):
     def click_create_new_list(self):
         self.page.click(ListPageLocators.CREATE_NEW_LIST_BUTTON)
 
-    def input_name_for_new_list(self, name_for_new_list):
-        self.page.fill(ListPageLocators.INPUT_NAME_NEW_CREATE_LIST, str(name_for_new_list))
+    def input_name_for_new_list(self, list_name):
+        self.page.fill(ListPageLocators.INPUT_NAME_NEW_CREATE_LIST, list_name)
 
     def save_new_list(self):
         self.page.click(ListPageLocators.SAVE_NEW_CREATE_LIST_BUTTON)
 
-    def create_new_list(self, name_for_new_list):
+    def create_new_list(self, list_name):
         self.click_create_new_list()
-        self.input_name_for_new_list(name_for_new_list)
+        self.input_name_for_new_list(list_name)
         self.save_new_list()
+
+    def generate_list_name(self):
+        random_list_name = ''.join(random.choices(string.ascii_letters, k=5))
+        return random_list_name
+
+    def created_list_click(self, created_list_locator):
+        created_list_locator.click()
+
+    def delete_button_click(self):
+        self.page.click(ListPageLocators.DELETE_LIST_BUTTON)
+
+    def apply_delete_list_click(self):
+        self.page.click(ListPageLocators.APPLY_DELETE_LIST_BUTTON)
+
+    def delete_list(self, list_name):
+        replace_list_name_locator = ListPageLocators.CREATED_NEW_LIST.format(list_name=list_name)
+        created_list_locator = self.page.locator(replace_list_name_locator)
+        self.created_list_click(created_list_locator)
+        self.page.wait_for_timeout(500)
+        self.delete_button_click()
+        self.apply_delete_list_click()
+
+
 
 
 

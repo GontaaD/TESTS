@@ -1,5 +1,11 @@
-from zakaz_ua.locators.locators import MainPagelocators
 from zakaz_ua.pages.base_page import BasePage
+
+class MainPagelocators:
+    CATEGORY_BUTTON = "//button[contains(@class, 'CategoriesMenuButton__inner')]"
+    BBQ_CATEGORY_BUTTON = "//ul[@data-testid='categoriesMenuNav']//a[contains(@href, '/bbq-season-zakaz/')]"
+    ACCOUNT_NAVIGATOR = "//div[@data-marker='account navigation']"
+    LIST_MENU = "(//p[@class='AccountNavigationItem__text css-1sxve9s'])[6]"
+    LIKE_BUTTON = "//button[@class='FavoriteButton css-13hb15a']"
 
 class MainPage(BasePage):
     def click_category_button(self):
