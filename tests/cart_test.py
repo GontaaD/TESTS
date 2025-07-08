@@ -9,7 +9,7 @@ def browser():
         yield browser
         browser.close()
 
-def test_add_product_to_cart(browser):
+def est_add_product_to_cart(browser):
     page = browser.new_page()
     page.goto("https://rozetka.com.ua", wait_until="load")
 

@@ -1,7 +1,9 @@
+import allure
 from zakaz_ua.tests.base_test import BaseTest
 from zakaz_ua.pages.Page_meneger import PageMeneger
 
 class TestMain(BaseTest):
+    @allure.step("product like test start")
     def test_start(self):
         pages = PageMeneger(self.page)
 
@@ -19,4 +21,4 @@ class TestMain(BaseTest):
 
         pages.main_page.remove_like()
 
-        assert productTitle1 in productTitle2
+        pages.check_page.like_check(productTitle1, productTitle2)

@@ -1,8 +1,9 @@
+import allure
 from zakaz_ua.tests.base_test import BaseTest
 from zakaz_ua.pages.Page_meneger import PageMeneger
 
 class TestMain(BaseTest):
-
+    @allure.step("delete list test start")
     def test_start(self):
         pages = PageMeneger(self.page)
 

@@ -12,4 +12,3 @@ class PageMeneger:
         self.list_page = ListPage(page)
         self.login_page = LoginPage(page)
         self.check_page = CheckTestPage(page)
-        self.page.goto("https://www.zakaz.ua", wait_until="load")

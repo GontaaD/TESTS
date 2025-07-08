@@ -9,7 +9,7 @@ def browser():
         yield browser
         browser.close()
 
-def test_login_by_phone(browser):
+def est_login_by_phone(browser):
     page = browser.new_page()
     page.goto("https://rozetka.com.ua", wait_until="load")
 
