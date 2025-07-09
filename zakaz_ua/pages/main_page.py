@@ -1,44 +1,54 @@
-import allure
+from allure import step
 from zakaz_ua.pages.base_page import BasePage
+from zakaz_ua.locators.BaseElement import BaseElement
+from page_wrapper import PageWrapper as Pgw
 
-class MainPagelocators(BasePage):
-    CATEGORY_BUTTON = "//button[@class='CategoriesMenuButton__inner']"
-    BBQ_CATEGORY_BUTTON = "//a[contains(@href, '/bbq-season-zakaz/')]"
-    ACCOUNT_NAVIGATOR = "//div[@data-marker='account navigation']"
-    LIST_MENU = "//*[text()='Списки']//ancestor::p[@data-sentry-element='StyledComponent']"
-    LIKE_BUTTON = "//button[@data-marker='Favorite button']"
+class CategoryButton(BaseElement):
+    @property
+    def locator(self):
+        return "//button[@class='CategoriesMenuButton__inner']"
 
-    def __init__(self, page):
-        self.page = page
+class BbqCategoryButton(BaseElement):
+    @property
+    def locator(self):
+        return "//a[contains(@href, '/bbq-season-zakaz/')]"
+
+class AccountMenu(BaseElement):
+    @property
+    def locator(self):
+        return "//div[@data-marker='account navigation']"
+
+class ListMenu(BaseElement):
+    @property
+    def locator(self):
+        return "//*[text()='Списки']//ancestor::p[@data-sentry-element='StyledComponent']"
+
+class LikeButton(BaseElement):
+    @property
+    def locator(self):
+        return "//button[@data-marker='Favorite button']"
 
 class MainPage(BasePage):
-    @allure.step("click category button")
-    def click_category_button(self):
-        self.page.click(MainPagelocators.CATEGORY_BUTTON)
+    def __init__(self, page):
+        super().__init__(page)
+        self.wrapper = Pgw(page)
+        self.category_button = CategoryButton(self.page)
+        self.bbq_category_button = BbqCategoryButton(self.page)
+        self.account_menu = AccountMenu(self.page)
+        self.list_menu = ListMenu(self.page)
+        self.like_button = LikeButton(self.page)
 
-    @allure.step("click bbq category button")
-    def click_bbq_button(self):
-        self.page.click(MainPagelocators.BBQ_CATEGORY_BUTTON)
-
-    @allure.step("open bbq category")
+    @step("open bbq category")
     def open_bbq_category(self):
-        self.click_category_button()
-        self.click_bbq_button()
+        self.category_button.click()
+        self.bbq_category_button.click()
 
-    @allure.step("open account navigator")
-    def open_account_navigator(self):
-        self.page.hover(MainPagelocators.ACCOUNT_NAVIGATOR)
-
-    @allure.step("click list menu")
-    def click_to_list_menu(self):
-        self.page.click(MainPagelocators.LIST_MENU)
-
-    @allure.step("open list menu")
+    @step("open list menu")
     def open_list_menu(self):
-        self.open_account_navigator()
-        self.page.wait_for_timeout(500)
-        self.click_to_list_menu()
+        self.account_menu.click()
+        self.wrapper.wait_for_timeout(500)
+        self.list_menu.click()
 
-    @allure.step("remove like")
+    @step("remove like")
     def remove_like(self):
-        self.page.click(MainPagelocators.LIKE_BUTTON)
+        self.like_button.click()

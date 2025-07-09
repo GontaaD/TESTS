@@ -1,23 +1,31 @@
 import allure
-from zakaz_ua.pages.list_page import ListPageLocators
-from zakaz_ua.pages.BBQ_category_page import BBQCategoryPageLocators
+from zakaz_ua.pages.list_page import ListPage
+from zakaz_ua.pages.BBQ_category_page import BBQPage
 from zakaz_ua.pages.base_page import BasePage
+from zakaz_ua.locators.BaseElement import BaseElement
+from page_wrapper import PageWrapper as Pgw
 import re
 
 class CheckTestPage(BasePage):
+    def __init__(self, page):
+        super().__init__(page)
+        self.bbq_page = BBQPage(page)
+        self.list_page = ListPage(page)
+        self.wrapper = Pgw(page)
         # filter check
     @allure.step("check all price in range")
     def check_all_prices_in_range(self, enter_min_price, enter_max_price):
-        price_blocks = self.page.locator(BBQCategoryPageLocators.PRICE_BLOCK)
+        self.page.wait_for_timeout(500)
+        price_blocks = self.bbq_page.price_block.get_locator
         price_blocks_count = price_blocks.count()
 
         for i in range(price_blocks_count):
             block = price_blocks.nth(i)
 
-            start_text = block.locator(BBQCategoryPageLocators.START_PRODUCT_PRICE).text_content()
+            start_text = block.locator(self.bbq_page.start_product_price.locator).text_content()
             start_val = self._parse_price(start_text)
 
-            end_price_locator = block.locator(BBQCategoryPageLocators.END_PRODUCT_PRICE)
+            end_price_locator = block.locator(self.bbq_page.end_product_price.locator)
             end_val = None
             if end_price_locator.count() > 0:
                 end_text = end_price_locator.text_content()
@@ -41,6 +49,7 @@ class CheckTestPage(BasePage):
                 raise AssertionError(
                     f"price range of the product [{min_price} - {max_price}] "
                     f"does not overlap the filter range [{enter_min_price} - {enter_max_price}]"
+                    f"start text [{start_text}]"
                 )
 
     @allure.step("price adjustment method")
@@ -64,25 +73,21 @@ class CheckTestPage(BasePage):
         #create new list check
     @allure.step("check create new list")
     def create_new_list_test(self, list_name):
-        basepage = BasePage(self.page)
-        replace_list_name_locator = ListPageLocators.CREATED_NEW_LIST.format(list_name=list_name)
+        replace_list_name_locator = self.list_page.any_list.format(list_name=list_name)._formatted_locator
         created_list_locator = self.page.locator(replace_list_name_locator)
         self.page.wait_for_timeout(500)
-        basepage.is_visible(ListPageLocators.CREATED_NEW_LIST)
         list_count = created_list_locator.count()
-        print(f"Object count:'{created_list_locator}' '{list_count}'")
+        print(f"Object count:'{created_list_locator}' '{list_count}' '{list_name}'")
         assert list_count != 0, (f"Object count:'{created_list_locator}' '{list_count}'")
 
         #delete lict check
     @allure.step("check delete list")
     def delete_list_check(self, list_name):
-        basepage = BasePage(self.page)
-        replace_list_name_locator = ListPageLocators.CREATED_NEW_LIST.format(list_name=list_name)
+        replace_list_name_locator = self.list_page.any_list.format(list_name=list_name)._formatted_locator
         created_list_locator = self.page.locator(replace_list_name_locator)
         self.page.wait_for_timeout(500)
-        basepage.is_visible(ListPageLocators.CREATED_NEW_LIST)
         list_count = created_list_locator.count()
-        print(f"Object count:'{created_list_locator}' '{list_count}'")
+        print(f"Object count:'{created_list_locator}' '{list_count}' '{list_name}'")
         assert list_count == 0, (f"Object count:'{created_list_locator}' '{list_count}'")
 
         #like test check

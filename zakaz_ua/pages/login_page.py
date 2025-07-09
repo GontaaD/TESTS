@@ -1,55 +1,72 @@
-import allure
+from allure import step
 from playwright.sync_api import expect
 from zakaz_ua.pages.base_page import BasePage
 from zakaz_ua.locators.variables_page import Variables
+from zakaz_ua.locators.BaseElement import BaseElement
+from page_wrapper import PageWrapper as Pgw
 
-class LoginPagelocators(BasePage):
-    LOGIN_BUTTON = "//button[@data-marker='Header login']"
-    NUMBER_INPUT = "//input[@class='form-control ']"
-    PASSWORD_INPUT = "//input[@class='Input__field']"
-    LOGIN_APPLY_BUTTON = "//button[@data-marker='Submit']"
-    ERROR_LOGIN_MESSAGE = "//p[@data-testid='common-error']"
+class LoginButton(BaseElement):
+    @property
+    def locator(self):
+        return "//button[@data-marker='Header login']"
 
-    def __init__(self, page):
-        self.page = page
+class NumberInput(BaseElement):
+    @property
+    def locator(self):
+        return "//input[@class='form-control ']"
+
+class PasswordInput(BaseElement):
+    @property
+    def locator(self):
+        return "//input[@class='Input__field']"
+
+class LoginApplyButton(BaseElement):
+    @property
+    def locator(self):
+        return "//button[@data-marker='Submit']"
+
+class ErrorLoginMassage(BaseElement):
+    @property
+    def locator(self):
+        return "//p[@data-testid='common-error']"
 
 class LoginPage(BasePage):
-    @allure.step("click login button")
-    def click_login_button(self):
-        self.page.click(LoginPagelocators.LOGIN_BUTTON)
-        self.page.wait_for_timeout(300)
+    def __init__(self, page):
+        super().__init__(page)
+        self.wrapper = Pgw(page)
+        self.login_button = LoginButton(page)
+        self.number_input = NumberInput(page)
+        self.password_input = PasswordInput(page)
+        self.login_apply_button = LoginApplyButton(page)
+        self.error_login_massage = ErrorLoginMassage(page)
 
-    @allure.step("fill number")
+    @step("fill number")
     def fill_number(self):
-        number_input = self.page.locator(LoginPagelocators.NUMBER_INPUT)
-        expect(number_input).to_be_visible()
-        expect(number_input).to_be_enabled()
-        number_input.fill("")
-        self.page.wait_for_timeout(500)
-        number_input.type(Variables.NUMBER, delay=100)
-        self.page.wait_for_timeout(1000)
-        final_value = number_input.input_value()
-        assert final_value != "+380", f"Після введення по-символьно залишилось лише '+380', фактичне: {final_value}"
-        expect(number_input).to_have_value("+380 (99) 795 20 94")
+        expect(self.number_input.get_locator).to_be_visible()
+        expect(self.number_input.get_locator).to_be_enabled()
+        self.number_input.fill("")
+        self.wrapper.wait_for_timeout(500)
+        self.number_input.type(Variables.NUMBER, delay=100)
+        final_value = self.number_input.input_value
+        assert final_value != "+380", f"After character-by-character typing, only '+380' remained. Actual value: {final_value}"
+        expect(self.number_input.get_locator).to_have_value("+380 (99) 795 20 94")
 
-    @allure.step("fill password")
+    @step("fill password")
     def fill_password(self):
-        password_input = self.page.locator(LoginPagelocators.PASSWORD_INPUT)
-        expect(password_input).to_be_visible()
-        expect(password_input).to_be_enabled()
-        password_input.fill(Variables.PASSWORD)
-        expect(password_input).to_have_value(Variables.PASSWORD)
+        expect(self.password_input.get_locator).to_be_visible()
+        expect(self.password_input.get_locator).to_be_enabled()
+        self.password_input.fill(Variables.PASSWORD)
+        expect(self.password_input.get_locator).to_have_value(Variables.PASSWORD)
 
-    @allure.step("click confirm login button")
+    @step("click confirm login button")
     def click_confirm_login_button(self):
-        self.page.click(LoginPagelocators.LOGIN_APPLY_BUTTON)
-        self.page.wait_for_timeout(300)
+        self.login_apply_button.click()
 
-    @allure.step("login")
+    @step("login")
     def login(self):
-        self.click_login_button()
+        self.login_button.click()
         self.fill_number()
         self.fill_password()
-        self.click_confirm_login_button()
-        if self.page.is_visible(LoginPagelocators.ERROR_LOGIN_MESSAGE):
+        self.login_apply_button.click()
+        if self.error_login_massage.is_visible:
             raise AssertionError("Login failed: incorrect login or password")
