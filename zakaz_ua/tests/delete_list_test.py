@@ -1,6 +1,6 @@
 import allure
 from zakaz_ua.tests.base_test import BaseTest
-from zakaz_ua.pages.Page_meneger import PageMeneger
+from zakaz_ua.pages.Page_manager import PageMeneger
 
 class TestMain(BaseTest):
     @allure.step("delete list test start")
@@ -18,4 +18,6 @@ class TestMain(BaseTest):
         pages.list_page.delete_list(new_list_name)
 
         pages.check_page.delete_list_check(new_list_name)
+
+
 

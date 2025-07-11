@@ -14,16 +14,14 @@ class BaseElement(BasePage):
             return self._formatted_locator
         raise NotImplementedError("The descendant class must define locator property")
 
-    def format(self, *args, **kwargs):
-        self.clear_format()
-        template = self.locator
-        #template = super().locator if hasattr(super(), 'locator') else self.locator_template
-        self._formatted_locator = template.format(*args, **kwargs)
-        return self
+    @property
+    def format_locator(self):
+        raise NotImplementedError("The descendant class must define raw_locator property")
 
-    def clear_format(self):
-        self._formatted_locator = None
-        return self
+    def format(self, *args, **kwargs):
+        with allure.step(f"Format locator with args: {args}, kwargs: {kwargs}"):
+            self._formatted_locator = self.format_locator.format(*args, **kwargs)
+            return self
 
     def click(self):
         with allure.step(f"Click {self.locator}"):
@@ -32,7 +30,6 @@ class BaseElement(BasePage):
             except TimeoutError:
                 AssertionError (f"Failed to click {self.locator}")
 
-
     def fill(self, value: str):
         with allure.step(f"Fill {self.locator} with {value}"):
             try:
@@ -40,10 +37,17 @@ class BaseElement(BasePage):
             except TimeoutError:
                 AssertionError(f"Failed to fill {self.locator} with {value}")
 
-    def get_text(self):
+    def clear(self):
+        with allure.step(f"Clear {self.locator}"):
+            try:
+                self.wrapper.fill(self.locator, "")
+            except TimeoutError:
+                AssertionError(f"Failed to clear {self.locator}")
+
+    def get_text(self, locator: str = None):
         with allure.step(f"Get {self.locator} text"):
             try:
-                return self.wrapper.get_text(self.locator)
+                return self.wrapper.get_text(locator or self.locator)
             except TimeoutError:
                 AssertionError(f"Failed to get {self.locator} text")
 
@@ -54,7 +58,6 @@ class BaseElement(BasePage):
                 return self.wrapper.is_visible(self.locator)
             except TimeoutError:
                 return False
-
 
     def type(self, value: str, delay: float = 0):
         with allure.step(f"Type {self.locator} with {value}"):
@@ -78,3 +81,17 @@ class BaseElement(BasePage):
                 return self.page.locator(self.locator)
             except TimeoutError:
                 AssertionError(f"Failed to get {self.locator} locator")
+
+    def count(self):
+        with allure.step(f"Count elements by locator: {self.locator}"):
+            try:
+                return self.get_locator.count()
+            except TimeoutError:
+                AssertionError(f"Failed to count elements for {self.locator}")
+
+    def scroll_into_view_if_needed(self):
+        with allure.step(f"Scroll into view element by locator: {self.locator}"):
+            try:
+                self.wrapper.scroll_into_view_if_needed(self.locator)
+            except TimeoutError:
+                AssertionError(f"Failed to scroll element {self.locator} into view")

@@ -1,6 +1,6 @@
 import allure
 from zakaz_ua.tests.base_test import BaseTest
-from zakaz_ua.pages.Page_meneger import PageMeneger
+from zakaz_ua.pages.Page_manager import PageMeneger
 
 class TestMain(BaseTest):
     @allure.step("product like test start")
@@ -11,14 +11,10 @@ class TestMain(BaseTest):
 
         pages.main_page.open_bbq_category()
 
-        productTitle1 = pages.bbq_page.search_product_name_in_catalog()
-
         pages.bbq_page.click_heart_button()
 
         pages.main_page.open_list_menu()
 
-        productTitle2 = pages.list_page.search_product_name_in_list()
+        pages.check_page.like_availability_check()
 
         pages.main_page.remove_like()
-
-        pages.check_page.like_check(productTitle1, productTitle2)

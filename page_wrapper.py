@@ -25,4 +25,6 @@ class PageWrapper:
     def input_value(self, locator: str):
         return self.page.locator(locator).input_value()
 
+    def scroll_into_view_if_needed(self, locator: str):
+        self.page.locator(locator).scroll_into_view_if_needed()
 
