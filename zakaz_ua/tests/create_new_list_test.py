@@ -1,7 +1,9 @@
+import pytest
 import allure
 from zakaz_ua.tests.base_test import BaseTest
 from zakaz_ua.pages.Page_manager import PageMeneger
 
+@pytest.mark.list
 class TestMain(BaseTest):
     @allure.step("create new list test start")
     def test_start(self):
@@ -16,6 +18,8 @@ class TestMain(BaseTest):
         pages.list_page.create_new_list(new_list_name)
 
         pages.check_page.create_new_list_test(new_list_name)
+
+        pages.list_page.delete_list(new_list_name)
 
 
 

@@ -1,17 +1,16 @@
+import pytest
 import allure
 from zakaz_ua.tests.base_test import BaseTest
 from zakaz_ua.pages.Page_manager import PageMeneger
 
+@pytest.mark.address
 class TestMain(BaseTest):
-    @allure.step("search_field_test_start")
+    @allure.step("change adding products to list test start")
     def test_start(self):
-        part_of_the_product_name = "пиво hei"
-
         pages = PageMeneger(self.page)
 
         pages.login_page.login()
 
-        pages.main_page.search_product(part_of_the_product_name)
+        pages.address_page.set_courier_address()
 
-        pages.check_page.search_field_check(part_of_the_product_name)
-
+        pages.check_page.add_courier_address_check()

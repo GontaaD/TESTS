@@ -29,7 +29,7 @@ class ApplyListNameButton(BaseElement):
 class ProductInListName(BaseElement):
     @property
     def locator(self):
-        return "(//p[@class='CatalogProductTile__title'])[1]"
+        return "(//p[@class='CatalogProductTile__title'])"
 
 class SaveChangeListButton(BaseElement):
     @property
@@ -66,13 +66,18 @@ class ApplyDeleteListButton(BaseElement):
     def locator(self):
         return "//button[@data-marker='Yes']"
 
+class SelectedListInChangeList(BaseElement):
+    @property
+    def locator(self):
+        return "//div[@aria-checked='true']"
+
 class ListPage(BasePage):
     def __init__(self, page):
         super().__init__(page)
         self.wrapper = Pgw(page)
         self.rename_button = RenameButton(self.page)
         self.any_list = AnyList(self.page)
-        self.mainpage = MainPage(self.page)
+        self.main_page = MainPage(self.page)
         self.input_list_name = InputListName(self.page)
         self.apply_list_name = ApplyListNameButton(self.page)
         self.product_in_list_name = ProductInListName(self.page)
@@ -83,22 +88,28 @@ class ListPage(BasePage):
         self.save_new_created_list_button = SaveNewCreateListButton(self.page)
         self.delete_list_button = DeleteListButton(self.page)
         self.apply_delete_list_button = ApplyDeleteListButton(self.page)
+        self.selected_list_in_change_list = SelectedListInChangeList(self.page)
 
     @step("search product name in list")
     def search_product_name_in_list(self):
-        return self.product_in_list_name.get_text()
+        return self.product_in_list_name.wait_for(state="visible", timeout=1000).get_text()
 
     @step("open my created list")
-    def open_my_created_list(self,old_list_name):
-        self.any_list.format(list_name=old_list_name).click()
+    def open_my_created_list(self,list_name):
+        self.any_list.format(list_name=list_name).wait_for(state="visible", timeout=3000).click()
+        self.delete_list_button.wait_for(state="visible", timeout=3000)
 
     @step("save old list name")
     def save_old_list_name(self, old_list_name):
         return self.any_list.format(list_name=old_list_name).get_text()
 
+    @step("save new list name")
+    def save_new_list_name(self, new_list_name):
+        return self.any_list.format(list_name=new_list_name).get_text()
+
     @step("clear input list name")
     def clear_input_list_name(self):
-        self.input_list_name.fill("")
+        self.input_list_name.wait_for(state="visible").clear()
 
     @step("click apply list name")
     def click_apply_list_name(self):
@@ -108,34 +119,29 @@ class ListPage(BasePage):
     def rename_list(self, old_list_name, new_list_name):
         self.open_my_created_list(old_list_name)
         self.rename_button.click()
-        self.wrapper.wait_for_timeout(500)
         self.clear_input_list_name()
         self.input_list_name.fill(new_list_name)
         self.click_apply_list_name()
-        self.wrapper.wait_for_timeout(500)
 
     @step("back old list name")
     def back_old_list_name(self, old_list_name, new_list_name):
         self.any_list.format(list_name=new_list_name).click()
         self.rename_button.click()
-        self.wrapper.wait_for_timeout(300)
         self.clear_input_list_name()
         self.input_list_name.fill(old_list_name)
         self.click_apply_list_name()
 
     @step("change list")
     def change_list(self, first_list_name, second_list_name):
-        self.change_list_button.click()
-        self.wrapper.wait_for_timeout(1000)
-        self.any_list.format(list_name=first_list_name).click()
-        self.wrapper.wait_for_timeout(500)
-        self.any_list.format(list_name=second_list_name).click()
-        self.wrapper.wait_for_timeout(500)
-        self.save_change_list_button.click()
+        self.change_list_button.wait_for(state="visible", timeout=1000).click()
+        self.selected_list_in_change_list.wait_for(state="visible", timeout=1000)
+        self.any_list.format(list_name=first_list_name).wait_for(state="visible").click()
+        self.any_list.format(list_name=second_list_name).wait_for(state="visible").click()
+        self.save_change_list_button.wait_for(state="visible").click()
 
     @step("check product in second list")
-    def check_product_in_second_list(self, second_list_name):
-        self.mainpage.open_list_menu()
+    def open_another_list(self, second_list_name):
+        self.main_page.open_list_menu()
         self.open_my_created_list(second_list_name)
 
     @step("create new list")
@@ -151,7 +157,7 @@ class ListPage(BasePage):
 
     @step("delete list")
     def delete_list(self, list_name):
-        self.any_list.format(list_name=list_name).click()
-        self.wrapper.wait_for_timeout(500)
-        self.delete_list_button.click()
+        self.any_list.format(list_name=list_name).wait_for(state="visible").click()
+        self.delete_list_button.wait_for(state="visible").click()
         self.apply_delete_list_button.click()
+        self.any_list.format(list_name=list_name).wait_for(state="hidden")

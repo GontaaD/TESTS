@@ -13,8 +13,8 @@ class PageWrapper:
     def get_text(self, locator: str):
         return self.page.locator(locator).text_content()
 
-    def is_visible(self, locator: str):
-        return self.page.is_visible(locator)
+    def is_visible(self, locator: str, timeout=30000):
+        return self.page.is_visible(locator, timeout=timeout)
 
     def wait_for_timeout(self, ms: int):
         self.page.wait_for_timeout(ms)

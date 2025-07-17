@@ -12,5 +12,8 @@ class Variables:
     TEST_NAME = "Tester"
     TEST_SURNAME = "Testerovich"
 
-    CITY = "Дніпро та передмістя"
+    COURIER_CITY = "Дніпро та передмістя"
     ADDRESS = "проспект Івана Мазепи, 2, Дніпро, Дніпропетровська область"
+
+    POSTAL_MACHINE_CITY = "Дніпро (Дніпропетровська)"
+    POSTAL_MACHINE_ADDRESS = "№47018"

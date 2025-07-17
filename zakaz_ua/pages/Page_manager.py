@@ -5,6 +5,8 @@ from zakaz_ua.pages.main_page import MainPage
 from zakaz_ua.pages.CheckTest_page import CheckTestPage
 from zakaz_ua.pages.settings_page import SettingsPage
 from zakaz_ua.pages.address_page import AddressPage
+from zakaz_ua.pages.vacancies_page import VacanciesPage
+from zakaz_ua.pages.egg_and_milk_category_page import EggAndMilkCategoryPage
 from page_wrapper import PageWrapper as Pgw
 
 class PageMeneger:
@@ -18,3 +20,5 @@ class PageMeneger:
         self.check_page = CheckTestPage(page)
         self.settings_page = SettingsPage(page)
         self.address_page = AddressPage(page)
+        self.vacancies_page = VacanciesPage(page)
+        self.egg_and_milk_category_page = EggAndMilkCategoryPage(page)

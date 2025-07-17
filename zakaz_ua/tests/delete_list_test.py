@@ -1,7 +1,9 @@
+import pytest
 import allure
 from zakaz_ua.tests.base_test import BaseTest
 from zakaz_ua.pages.Page_manager import PageMeneger
 
+@pytest.mark.list
 class TestMain(BaseTest):
     @allure.step("delete list test start")
     def test_start(self):

@@ -1,14 +1,18 @@
+import pytest
 import allure
 from zakaz_ua.tests.base_test import BaseTest
 from zakaz_ua.pages.Page_manager import PageMeneger
 
+@pytest.mark.filter
 class TestMain(BaseTest):
-    @allure.step("change adding products to list test start")
+    @allure.step("vacancies filter test start")
     def test_start(self):
         pages = PageMeneger(self.page)
 
         pages.login_page.login()
 
-        pages.address_page.select_address()
+        pages.main_page.open_bbq_category()
 
-        pages.check_page.add_address_check()
+        pages.bbq_page.set_high_sort_price()
+
+        pages.check_page.sort_by_price_high_check()

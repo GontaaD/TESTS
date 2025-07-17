@@ -43,6 +43,26 @@ class PriceBlock(BaseElement):
     def locator(self):
         return "//span[@data-sentry-component='PriceRange']"
 
+class ClearAllFiltersButton(BaseElement):
+    @property
+    def locator(self):
+        return "//button[@data-marker='Clear all filters']"
+
+class ProductQuantity(BaseElement):
+    @property
+    def locator(self):
+        return "//div[@data-marker='Goods Number']"
+
+class SortPriceButton(BaseElement):
+    @property
+    def locator(self):
+        return "//div[@data-testid='sort-button']"
+
+class HighSortPriceButton(BaseElement):
+    @property
+    def locator(self):
+        return "//div[@data-testid='price_desc']"
+
 class BBQPage(BasePage):
     def __init__(self, page):
         super().__init__(page)
@@ -55,17 +75,28 @@ class BBQPage(BasePage):
         self.end_product_price = EndProductPrice(self.page)
         self.filter_apply_button = FilterApplyButton(self.page)
         self.price_block = PriceBlock(self.page)
+        self.clear_all_filters_button = ClearAllFiltersButton(self.page)
+        self.product_quantity = ProductQuantity(self.page)
+        self.sort_price_button = SortPriceButton(self.page)
+        self.high_sort_price_button = HighSortPriceButton(self.page)
+
 
     @step("click heart button")
     def click_heart_button(self):
-        self.like_button.click()
+        self.like_button.wait_for(state="visible").click()
+        self.wrapper.wait_for_timeout(500)
 
     @step("search product name in catalog")
     def search_product_name_in_catalog(self):
-        return self.product_title.get_text()
+        return self.product_title.wait_for(state="visible", timeout=2000).get_text()
 
     @step("set price filter")
     def set_price_filter(self, enter_min_price, enter_max_price):
         self.max_price_filter.fill(str(enter_max_price))
         self.min_price_filter.fill(str(enter_min_price))
         self.filter_apply_button.click()
+
+    @step("set high sort price")
+    def set_high_sort_price(self):
+        self.sort_price_button.click()
+        self.high_sort_price_button.wait_for(state="visible").click()

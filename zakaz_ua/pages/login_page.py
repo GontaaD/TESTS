@@ -26,7 +26,7 @@ class LoginApplyButton(BaseElement):
     def locator(self):
         return "//button[@data-marker='Submit']"
 
-class ErrorLoginMassage(BaseElement):
+class ErrorLoginMessage(BaseElement):
     @property
     def locator(self):
         return "//p[@data-testid='common-error']"
@@ -45,15 +45,14 @@ class LoginPage(BasePage):
         self.number_input = NumberInput(page)
         self.password_input = PasswordInput(page)
         self.login_apply_button = LoginApplyButton(page)
-        self.error_login_massage = ErrorLoginMassage(page)
+        self.error_login_message = ErrorLoginMessage(page)
         self.account_name = AccountName(page)
 
     @step("fill number")
     def fill_number(self, number):
         expect(self.number_input.get_locator).to_be_enabled()
         self.number_input.clear()
-        self.wrapper.wait_for_timeout(500)
-        self.number_input.type(number, 100)
+        self.number_input.type(number, 30)
         final_value = self.number_input.input_value
         assert final_value != "+380", f"After character-by-character typing, only '+380' remained. Actual value: {final_value}"
 
@@ -69,14 +68,15 @@ class LoginPage(BasePage):
         self.fill_number(Variables.NUMBER)
         self.fill_password(Variables.PASSWORD)
         self.login_apply_button.click()
-        if self.error_login_massage.is_visible:
+        if self.error_login_message.is_visible():
             raise AssertionError("Login failed: incorrect login or password")
 
     @step("account name if visible")
-    def account_name_is_true(self):
-        self.wrapper.wait_for_timeout(500)
+    def is_account_name_is_true(self):
+        self.account_name.wait_for(state="attached")
         return self.account_name.count() > 0
 
-    @step("error login massage is visible")
-    def error_login(self):
-        return self.error_login_massage.is_visible
+    @step("error login message is visible")
+    def is_error_login(self):
+        self.error_login_message.wait_for(state="visible") ####
+        return self.error_login_message.is_visible(timeout=2000)

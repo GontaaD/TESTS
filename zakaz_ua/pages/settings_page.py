@@ -29,6 +29,11 @@ class LogoButton(BaseElement):
     def locator(self):
         return "//a[@data-sentry-component='Logo']"
 
+class InputErrorMessage(BaseElement):
+    @property
+    def locator(self):
+        return "//div[@data-testid='input-error-message']"
+
 class SettingsPage(BasePage):
     def __init__(self, page):
         super().__init__(page)
@@ -38,10 +43,10 @@ class SettingsPage(BasePage):
         self.surname_input = SurnameInput(page)
         self.save_personal_data = SavePersonalData(page)
         self.logo_button = LogoButton(page)
+        self.input_error_message = InputErrorMessage(page)
 
     @step("input personal data")
     def input_personal_data(self):
-        self.save_personal_data.is_visible
         self.save_personal_data.scroll_into_view_if_needed()
         self.email_input.clear()
         self.email_input.fill(Variables.TEST_GMAIL)
@@ -54,7 +59,6 @@ class SettingsPage(BasePage):
 
     @step("input old personal data")
     def input_old_personal_data(self):
-        self.save_personal_data.is_visible
         self.save_personal_data.scroll_into_view_if_needed()
         self.email_input.clear()
         self.email_input.fill(Variables.GMAIL)
@@ -75,4 +79,19 @@ class SettingsPage(BasePage):
     @step("save surname")
     def save_surname(self):
         return self.surname_input.input_value
+
+    @step("add email invalid format")
+    def input_email_invalid_format(self, invalid_email):
+        self.save_personal_data.scroll_into_view_if_needed()
+        self.email_input.clear()
+        self.email_input.fill(invalid_email)
+        self.save_personal_data.click()
+
+    @step("return old email")
+    def return_old_email(self):
+        self.email_input.clear()
+        self.email_input.fill(Variables.GMAIL)
+        self.save_personal_data.click()
+
+
 

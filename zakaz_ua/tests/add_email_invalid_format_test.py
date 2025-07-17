@@ -9,19 +9,14 @@ class TestMain(BaseTest):
     def test_start(self):
         pages = PageMeneger(self.page)
 
+        invalid_email = "gontadenis@com"
+
         pages.login_page.login()
 
         pages.main_page.open_account_settings()
 
-        pages.settings_page.input_personal_data()
+        pages.settings_page.input_email_invalid_format(invalid_email)
 
-        pages.check_page.add_personal_data_check()
+        pages.check_page.add_email_invalid_format_check()
 
-        pages.main_page.open_account_settings()
-
-        pages.settings_page.input_old_personal_data()
-
-
-
-
-
+        pages.settings_page.return_old_email()
