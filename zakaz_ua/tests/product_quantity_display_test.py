@@ -9,8 +9,6 @@ class TestMain(BaseTest):
     def test_start(self):
         pages = PageMeneger(self.page)
 
-        pages.login_page.login()
-
         pages.main_page.open_bbq_category()
 
         pages.check_page.product_quantity_display_check()

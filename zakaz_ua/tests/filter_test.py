@@ -12,8 +12,6 @@ class TestMain(BaseTest):
 
         pages = PageMeneger(self.page)
 
-        pages.login_page.login()
-
         pages.main_page.open_bbq_category()
 
         pages.bbq_page.set_price_filter(enter_min_price, enter_max_price)

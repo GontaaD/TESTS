@@ -11,8 +11,6 @@ class TestMain(BaseTest):
 
         pages = PageMeneger(self.page)
 
-        pages.login_page.login()
-
         pages.main_page.search_product(special_symbol_name)
 
         pages.check_page.search_with_special_symbol_field_check(special_symbol_name)

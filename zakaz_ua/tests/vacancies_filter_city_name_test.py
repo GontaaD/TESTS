@@ -11,6 +11,4 @@ class TestMain(BaseTest):
 
         city_name = "Київ"
 
-        pages.login_page.login()
-
         pages.check_page.vacancies_filter_check(city_name)

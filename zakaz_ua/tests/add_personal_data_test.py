@@ -9,8 +9,6 @@ class TestMain(BaseTest):
     def test_start(self):
         pages = PageMeneger(self.page)
 
-        pages.login_page.login()
-
         pages.main_page.open_account_settings()
 
         pages.settings_page.input_personal_data()

@@ -12,8 +12,6 @@ class TestMain(BaseTest):
 
         pages = PageMeneger(self.page)
 
-        pages.login_page.login()
-
         pages.main_page.open_list_menu()
 
         old_list_name = pages.list_page.save_old_list_name(start_list_name)

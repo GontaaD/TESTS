@@ -1,6 +1,6 @@
 from allure import step
 from zakaz_ua.pages.base_page import BasePage
-from zakaz_ua.locators.BaseElement import BaseElement
+from helper.BaseElement import BaseElement
 
 class EnabledFilterIcon(BaseElement):
     @property

@@ -2,8 +2,7 @@ from allure import step
 from playwright.sync_api import expect
 from zakaz_ua.pages.base_page import BasePage
 from zakaz_ua.pages.main_page import MainPage
-from zakaz_ua.locators.variables_page import Variables
-from zakaz_ua.locators.BaseElement import BaseElement
+from helper.BaseElement import BaseElement
 from page_wrapper import PageWrapper as Pgw
 
 class LoginButton(BaseElement):
@@ -62,14 +61,14 @@ class LoginPage(BasePage):
         self.password_input.fill(password)
         expect(self.password_input.get_locator).to_have_value(password)
 
-    @step("login")
-    def login(self):
-        self.login_button.click()
-        self.fill_number(Variables.NUMBER)
-        self.fill_password(Variables.PASSWORD)
-        self.login_apply_button.click()
-        if self.error_login_message.is_visible():
-            raise AssertionError("Login failed: incorrect login or password")
+    # @step("login")
+    # def login(self):
+    #     self.login_button.click()
+    #     self.fill_number(Variables.NUMBER)
+    #     self.fill_password(Variables.PASSWORD)
+    #     self.login_apply_button.click()
+    #     if self.error_login_message.is_visible():
+    #         raise AssertionError("Login failed: incorrect login or password")
 
     @step("account name if visible")
     def is_account_name_is_true(self):
@@ -78,5 +77,5 @@ class LoginPage(BasePage):
 
     @step("error login message is visible")
     def is_error_login(self):
-        self.error_login_message.wait_for(state="visible") ####
-        return self.error_login_message.is_visible(timeout=2000)
+        self.error_login_message.wait_for(state="visible", timeout=2000)
+        return self.error_login_message.is_visible()

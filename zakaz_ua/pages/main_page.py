@@ -1,6 +1,6 @@
 from allure import step
 from zakaz_ua.pages.base_page import BasePage
-from zakaz_ua.locators.BaseElement import BaseElement
+from helper.BaseElement import BaseElement
 from page_wrapper import PageWrapper as Pgw
 
 class CategoryButton(BaseElement):
@@ -46,7 +46,7 @@ class LikeButton(BaseElement):
 class SearchInput(BaseElement):
     @property
     def locator(self):
-        return "//input[@data-sentry-element='SearchInput']"
+        return "//input[@data-sentry-element='SearchInput'][@placeholder='Пошук товарів в усіх магазинах']"
 
 class SearchResultsProduct(BaseElement):
     @property
@@ -56,7 +56,7 @@ class SearchResultsProduct(BaseElement):
 class MainPageBox(BaseElement):
     @property
     def locator(self):
-        return "//main[@data-sentry-component='StylishBox']"
+        return "//h1[@data-sentry-component='StylishBox']"
 
 class VacanciesPageOpen(BaseElement):
     @property
@@ -110,7 +110,9 @@ class MainPage(BasePage):
     @step("scroll and input product name")
     def search_product(self, search_name):
         self.main_page_box.click()
+        self.wrapper.wait_for_timeout(1000)
         self.search_input.scroll_into_view_if_needed()
+        self.search_input.wait_for(state="visible").click()
         self.search_input.wait_for(state="visible").type(search_name, 100)
 
     @step("open account settings")

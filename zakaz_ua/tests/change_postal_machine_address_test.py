@@ -9,8 +9,6 @@ class TestMain(BaseTest):
     def test_start(self):
         pages = PageMeneger(self.page)
 
-        pages.login_page.login()
-
         pages.address_page.set_postal_machine_address()
 
         pages.check_page.add_postal_machine_address_check()

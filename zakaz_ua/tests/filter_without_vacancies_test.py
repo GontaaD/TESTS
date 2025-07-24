@@ -13,7 +13,5 @@ class TestMain(BaseTest):
 
         directions = "Дистанційна робота"
 
-        pages.login_page.login()
-
         pages.check_page.filter_without_vacancies_check(city_name, directions)
 

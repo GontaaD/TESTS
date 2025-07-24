@@ -1,6 +1,12 @@
 class Variables:
     NUMBER = "997952094"
     PASSWORD = "198595"
+
+    user_data = {
+        "login": "380997952094",
+        "password": "198595"
+    }
+
     INCORRECT_NUMBER = "990000000"
     INCORRECT_PASSWORD = "111111"
 

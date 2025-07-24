@@ -9,8 +9,6 @@ class TestMain(BaseTest):
     def test_start(self):
         pages = PageMeneger(self.page)
 
-        pages.login_page.login()
-
         pages.main_page.open_list_menu()
 
         new_list_name = pages.list_page.generate_list_name()

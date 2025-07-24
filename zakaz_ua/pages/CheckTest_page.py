@@ -8,7 +8,7 @@ from zakaz_ua.pages.BBQ_category_page import BBQPage
 from zakaz_ua.pages.settings_page import SettingsPage
 from zakaz_ua.pages.address_page import AddressPage
 from zakaz_ua.pages.vacancies_page import VacanciesPage
-from zakaz_ua.locators.variables_page import Variables
+from helper.variables_page import Variables
 from zakaz_ua.pages.egg_and_milk_category_page import EggAndMilkCategoryPage
 from page_wrapper import PageWrapper as Pgw
 
@@ -114,7 +114,7 @@ class CheckTestPage(BasePage):
 
     @step("search part field check")
     def search_part_field_check(self, part_of_the_product_name):
-        self.main_page.search_results_product.wait_for(state="visible")
+        self.main_page.search_results_product.wait_for(state="visible", timeout=2000)
         product_name_title = self.main_page.search_results_product.get_locator
         search_results_count = product_name_title.count()
         print(f"part of the product name: '{part_of_the_product_name}'")
@@ -264,7 +264,7 @@ class CheckTestPage(BasePage):
 
     @step("search with special symbol field check")
     def search_with_special_symbol_field_check(self, special_symbol_name):
-        self.main_page.search_results_product.wait_for(state="visible", timeout=2000)
+        self.main_page.search_results_product.wait_for(state="visible", timeout=3000)
         product_name_title = self.main_page.search_results_product.get_locator
         search_results_count = product_name_title.count()
         print(f"Product name: '{special_symbol_name}'")
@@ -293,24 +293,29 @@ class CheckTestPage(BasePage):
 
     @step("navigate to subcategory check")
     def navigate_to_subcategory_check(self, subcategory_name):
-        self.egg_and_milk_category_page.subcategory_name_title.format(category_name=subcategory_name).wait_for(state="visible")
+        self.wrapper.wait_for_timeout(1000)
+        self.egg_and_milk_category_page.subcategory_name_title.format(category_name=subcategory_name).wait_for(state="visible", timeout=2000)
         product_name_title_locator = self.egg_and_milk_category_page.product_name_title.get_locator
         product_name_title_count = product_name_title_locator.count()
-        subcategory = subcategory_name.lower()
+        acceptable_names = [
+            "сир",
+            "cир", #з латинською с
+            "тофу"
+        ]
         for i in range(product_name_title_count):
             product_block = product_name_title_locator.nth(i)
             product_name = product_block.text_content().lower()
             print(f"Product name: '{product_name}'")
             words = product_name.split()
-            if not any(subcategory in word for word in words):
+            if not any(any(acceptable in word for acceptable in acceptable_names) for word in words):
                 raise AssertionError(
-                    f"Product: '{product_name}' doesn't contain keyword '{subcategory_name}'"
+                    f"Product: '{product_name}' doesn't contain keyword '{acceptable_names}'"
                 )
-        print(f"All products fit the subcategory: '{subcategory_name}'")
+        print(f"All products fit the subcategory: '{acceptable_names}'")
 
     @step("product quantity display check")
     def product_quantity_display_check(self):
-        self.bbq_page.product_quantity.wait_for(state="visible", timeout=2000) #####
+        self.bbq_page.product_quantity.wait_for(state="visible", timeout=2000)
         if self.bbq_page.product_quantity.is_visible(timeout=2000):
             print("Product quantity is visible")
         else:

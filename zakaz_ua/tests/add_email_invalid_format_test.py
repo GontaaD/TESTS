@@ -11,8 +11,6 @@ class TestMain(BaseTest):
 
         invalid_email = "gontadenis@com"
 
-        pages.login_page.login()
-
         pages.main_page.open_account_settings()
 
         pages.settings_page.input_email_invalid_format(invalid_email)

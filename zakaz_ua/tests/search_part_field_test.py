@@ -11,8 +11,6 @@ class TestMain(BaseTest):
 
         pages = PageMeneger(self.page)
 
-        pages.login_page.login()
-
         pages.main_page.search_product(part_of_the_product_name)
 
         pages.check_page.search_part_field_check(part_of_the_product_name)

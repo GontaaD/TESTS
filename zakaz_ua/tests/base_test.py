@@ -4,7 +4,7 @@ from playwright.sync_api import sync_playwright
 
 class BaseTest:
     @pytest.fixture(autouse=True)
-    def setup_browser(self, request):
+    def setup_browser(self, request, get_cookies):
         with sync_playwright() as p:
             self.browser = p.chromium.launch(headless=False)
 
@@ -13,6 +13,9 @@ class BaseTest:
                 geolocation={"latitude": 50.7472, "longitude": 25.3254},
                 locale="uk-UA",
             )
+            if not request.node.get_closest_marker("login"):
+                self.context.add_cookies(get_cookies)
+
             self.page = self.context.new_page()
             self.page.goto("https://zakaz.ua/uk/", wait_until="load")
 

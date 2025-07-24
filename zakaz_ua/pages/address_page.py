@@ -1,7 +1,7 @@
 from allure import step
 from zakaz_ua.pages.base_page import BasePage
-from zakaz_ua.locators.variables_page import Variables
-from zakaz_ua.locators.BaseElement import BaseElement
+from helper.variables_page import Variables
+from helper.BaseElement import BaseElement
 from page_wrapper import PageWrapper as Pgw
 
 class OpenAddressBar(BaseElement):
@@ -107,7 +107,7 @@ class AddressPage(BasePage):
         self.input_postal_machine_city.type(Variables.POSTAL_MACHINE_CITY, 20)
         self.select_postal_machine_city.format(variable=Variables.POSTAL_MACHINE_CITY).wait_for(state="visible", timeout=1000).click()
         self.input_postal_machine_address.wait_for(state="visible").click()
-        self.input_postal_machine_address.wait_for(state="visible").type(Variables.POSTAL_MACHINE_ADDRESS, 20)
+        self.input_postal_machine_address.wait_for(state="visible").type(Variables.POSTAL_MACHINE_ADDRESS, 50)
         self.select_postal_machine_address.format(variable=Variables.POSTAL_MACHINE_ADDRESS).wait_for(state="visible", timeout=1000).click()
         self.confirm_address_button.click()
 

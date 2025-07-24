@@ -1,7 +1,7 @@
 from allure import step
 from zakaz_ua.pages.base_page import BasePage
-from zakaz_ua.locators.BaseElement import BaseElement
-from zakaz_ua.locators.variables_page import Variables
+from helper.BaseElement import BaseElement
+from helper.variables_page import Variables
 from page_wrapper import PageWrapper as Pgw
 
 class EmailInput(BaseElement):
