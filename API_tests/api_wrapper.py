@@ -12,7 +12,23 @@ class ApiWrapper(object):
 
     @step("request")
     def request(self, method, url, **kwargs):
-        response = self.session.request(method, f"{self.host}{url}", **kwargs)
+        full_url = f"{self.host}{url}"
+        print(f"\n === Request ==="
+              f"\n method: {method}"
+              f"\n url: {full_url}"
+              )
+        if 'headers' in kwargs:
+            print(f"headers: {kwargs['headers']}")
+        if 'json' in kwargs:
+            print(f"json: {kwargs['json']}")
+        if 'params' in kwargs:
+            print(f"params: {kwargs['params']}")
+        response = self.session.request(method, full_url, **kwargs)
+        print(f"\n === Response ==="
+              f"\n status_code: {response.status_code}"
+              f"\n text: {response.text}"
+              f"\n --------------------------"
+              )
         if self.raise_for_status:
             response.raise_for_status()
         return response
