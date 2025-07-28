@@ -1,4 +1,4 @@
-from API_tests.api_wrapper import ApiWrapper
+from API_tests.api_books.api_wrapper import ApiWrapper
 import pytest
 
 USER_NAME = "Denis"
