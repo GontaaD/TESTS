@@ -3,6 +3,7 @@ import allure
 from zakaz_ua.tests.base_test import BaseTest
 from zakaz_ua.pages.Page_manager import PageMeneger
 
+@pytest.mark.ui
 @pytest.mark.list
 class TestMain(BaseTest):
     @allure.step("create new list test start")

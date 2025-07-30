@@ -1,6 +1,7 @@
 import pytest
 from allure import step
 
+@pytest.mark.api
 @pytest.mark.api_contacts
 @step("test_replace_number_start")
 def test_replace_number(api_wrapper):

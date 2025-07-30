@@ -1,6 +1,7 @@
 import pytest
 from allure import step
 
+@pytest.mark.api
 @pytest.mark.api_books
 @step("api_test_get_user_start")
 def test_get_user(api_wrapper, books):

@@ -1,0 +1,32 @@
+default:
+  tags:
+    - shellrunner
+
+stages:
+  - tests
+  - allure
+
+UI Test:
+  stage: tests
+  allow_failure: true
+  script:
+    - pytest -m api
+  artifacts:
+    paths:
+      - allure-results
+
+API Test:
+  stage: tests
+  allow_failure: true
+  script:
+    - pytest -m api
+  artifacts:
+    paths:
+      - allure-results
+
+Allure results:
+  stage: allure
+  script:
+    -allure serve allure-results
+  artifacts:
+    when: always

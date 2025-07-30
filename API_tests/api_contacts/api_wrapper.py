@@ -1,13 +1,25 @@
 from requests import Session
 from allure import step
 
+
 class ApiWrapper:
     def __init__(self):
         self.host = "https://thinking-tester-contact-list.herokuapp.com/"
-        self.raise_for_status = True
         self.session = Session()
         self.email = None
         self.password = None
+        self.payload = {
+            "birthdate": "1999-01-01",
+            "city": "Луцьк",
+            "country": "Україна",
+            "email": "taras@gmail.com",
+            "firstName": "Тарас",
+            "lastName": "Шевченко",
+            "phone": "0991234567",
+            "postalCode": "43010",
+            "stateProvince": "Волинська область",
+            "street1": "вул.Ковельська "
+        }
 
     @step("request")
     def request(self, method, url, **kwargs):
@@ -28,8 +40,6 @@ class ApiWrapper:
               f"\n text: {response.text}"
               f"\n --------------------------"
               )
-        if self.raise_for_status:
-            response.raise_for_status()
         return response
 
     @step("login")
@@ -42,21 +52,9 @@ class ApiWrapper:
 
     @step("add_contact")
     def add_contact(self, count=1):
-        payload = {
-            "birthdate": "1999-01-01",
-            "city": "Луцьк",
-            "country": "Україна",
-            "email": "taras@gmail.com",
-            "firstName": "Тарас",
-            "lastName": "Шевченко",
-            "phone": "0991234567",
-            "postalCode": "43010",
-            "stateProvince": "Волинська область",
-            "street1": "вул.Ковельська "
-        }
         results = []
         for _ in range(count):
-            response = self.request("POST", "contacts", json=payload)
+            response = self.request("POST", "contacts", json=self.payload)
             results.append(response.json())
         return results
 

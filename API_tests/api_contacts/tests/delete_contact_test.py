@@ -1,6 +1,7 @@
 import pytest
 from allure import step
 
+@pytest.mark.api
 @pytest.mark.api_contacts
 @step("test_delete_contact_start")
 def test_delete_contact(api_wrapper):

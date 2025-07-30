@@ -1,6 +1,7 @@
 import pytest
 from allure import step
 
+@pytest.mark.api
 @pytest.mark.api_books
 @step("api_test_replace_books_start")
 def test_replace_books(api_wrapper, books):

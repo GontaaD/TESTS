@@ -1,6 +1,7 @@
 import pytest
 from allure import step
 
+@pytest.mark.api
 @pytest.mark.api_contacts
 @step("test_add_new_contact_start")
 def test_add_new_contact(api_wrapper):

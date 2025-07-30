@@ -1,6 +1,7 @@
 import pytest
 from allure import step
 
+@pytest.mark.api
 @pytest.mark.api_books
 @step("api_test_add_duplicate_books_start")
 def test_add_duplicate_books(api_wrapper, books):
