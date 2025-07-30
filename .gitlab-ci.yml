@@ -5,8 +5,9 @@ stages:
 UI Test:
   stage: tests
   allow_failure: true
-  image: mcr.microsoft.com/playwright/python:v1.40.0-focal
+  image: mcr.microsoft.com/playwright/python:v1.44.0-jammy
   script:
+    - pip install -r requirements.txt
     - pytest -m ui
   artifacts:
     paths:
