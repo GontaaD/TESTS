@@ -5,7 +5,9 @@ stages:
 UI Test:
   stage: tests
   allow_failure: true
+  image: python:3.11
   script:
+    - pip install -r requirements.txt
     - pytest -m ui
   artifacts:
     paths:
@@ -14,7 +16,9 @@ UI Test:
 API Test:
   stage: tests
   allow_failure: true
+  image: python:3.11
   script:
+    - pip install -r requirements.txt
     - pytest -m api
   artifacts:
     paths:
@@ -22,6 +26,7 @@ API Test:
 
 Allure results:
   stage: allure
+  image: python:3.11
   script:
     - allure serve allure-results
   artifacts:
