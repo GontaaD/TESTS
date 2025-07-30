@@ -10,7 +10,7 @@ UI Test:
   stage: tests
   allow_failure: true
   script:
-    - pytest -m api
+    - pytest -m ui
   artifacts:
     paths:
       - allure-results
@@ -27,6 +27,6 @@ API Test:
 Allure results:
   stage: allure
   script:
-    -allure serve allure-results
+    - allure serve allure-results
   artifacts:
     when: always
