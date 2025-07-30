@@ -29,6 +29,8 @@ Allure results:
   stage: allure
   image: python:3.11
   script:
-    - allure serve allure-results
+    - echo "Allure results collected"
   artifacts:
     when: always
+    paths:
+      - allure-results
