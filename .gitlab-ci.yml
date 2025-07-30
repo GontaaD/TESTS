@@ -8,6 +8,7 @@ UI Test:
   image: python:3.11
   script:
     - pip install -r requirements.txt
+    - playwright install
     - pytest -m ui
   artifacts:
     paths:
