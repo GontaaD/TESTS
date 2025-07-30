@@ -6,7 +6,7 @@ class BaseTest:
     @pytest.fixture(autouse=True)
     def setup_browser(self, request, get_cookies):
         with sync_playwright() as p:
-            self.browser = p.chromium.launch(headless=False)
+            self.browser = p.chromium.launch(headless=True)
 
             self.context = self.browser.new_context(
                 permissions=["geolocation"],
